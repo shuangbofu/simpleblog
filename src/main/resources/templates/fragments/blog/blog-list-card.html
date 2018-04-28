@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       data-th-fragment="blog-list-card">
+<head>
+    <link rel="stylesheet" th:href="@{/css/blog/blog-list-card.css}">
+</head>
+<body>
+<div class="tip" th:if="${tip.title!=''}">
+    <div class="tip-text">
+        <span>以下是 </span>
+        <span style="color: #26A2EF;">[ [[${tip.data}]] ]</span>
+        <span>[[${tip.title}]]下的所有文章</span>
+    </div>
+</div>
+<div id="articleListCard">
+    <div class="article-card" th:each="blog : ${blogPage.list}">
+        <div class="article-title">
+            <a class="article-tag" th:href="@{/tag/} + ${blog.tags.split(',')[0]}" th:text="${blog.tags.split(',')[0]}"> </a>
+            <a class="title-text" th:href="@{/article/} + ${blog.id}" th:text="${blog.title}"></a>
+        </div>
+        <div class="article-summary">
+            <p>
+                <span th:text="${blog.summary} + '...'"></span>
+                <a th:href="@{/article/} + ${blog.id}" class="readMore">[阅读全文]</a></p>
+        </div>
+        <div class="article-info">
+
+            <div>
+                <span th:classappend="${blog.original ? '' : 'not-original'}" class="original-mark" th:text="'# ' + ${blog.original ? ' 原创':' 转载' }"></span>
+                [[${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}]]
+            </div>
+            <div class="comment-browse">
+                <div class="browse">
+                    <img th:src="@{/img/browse.png}" class="browse-img">
+                    <div class="browse-number" th:text="${blog.readSize}"></div>
+                </div>
+                <div class="comment">
+                    <img th:src="@{/img/comment.png}" class="comment-img">
+                    <div class="comment-number" th:text="${blog.commentSize}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

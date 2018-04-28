@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shuangbofu.mapper.CategoryMapper">
+    <resultMap id="categoryResultMap" type="cn.shuangbofu.entity.Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="usenum" property="usenum"/>
+        <result column="gmt_create" property="createTime"/>
+        <result column="gmt_modified" property="updateTime"/>
+    </resultMap>
+    <select id="findList" resultMap="categoryResultMap">
+        SELECT id, name, usenum
+        FROM `category`
+        ORDER BY usenum DESC
+    </select>
+    <select id="findOne" resultMap="categoryResultMap">
+        SELECT id, name
+        FROM  `category`
+        WHERE id = #{id}
+    </select>
+    <update id="increaseUsenum" parameterType="Integer">
+        UPDATE `category`
+        SET usenum = usenum + 1
+        WHERE id = #{id}
+    </update>
+</mapper>

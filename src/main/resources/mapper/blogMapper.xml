@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shuangbofu.mapper.BlogMapper">
+    <resultMap id="blogResultMap" type="cn.shuangbofu.entity.Blog">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="summary" property="summary"/>
+        <result column="content" property="content"/>
+        <result column="html_content" property="htmlContent"/>
+        <result column="tags" property="tags"/>
+        <result column="comment_size" property="commentSize"/>
+        <result column="read_size" property="readSize"/>
+        <result column="is_original" property="original"/>
+        <result column="gmt_create" property="createTime"/>
+        <result column="gmt_modified" property="updateTime"/>
+        <result column="copyright_info" property="copyrightInfo"/>
+        <association property="category" javaType="cn.shuangbofu.entity.Category">
+            <id column="category_id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="findList" resultMap="blogResultMap">
+        SELECT id, title, summary, tags, comment_size, read_size, is_original, gmt_create, gmt_modified
+        FROM `blog`
+        <if test="ids!= null">
+            WHERE id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY id DESC
+    </select>
+    <select id="findListByCategory" resultMap="blogResultMap">
+        SELECT b.id, title, summary, tags, c.name, b.category_id, comment_size, read_size, is_original, b.gmt_create, b.gmt_modified
+        FROM `blog` b
+        JOIN `category` c
+        ON c.id = b.category_id
+        AND c.id = #{categoryId}
+    </select>
+    <select id="findOne" resultMap="blogResultMap">
+        SELECT b.id, title, summary, html_content, category_id, c.name, tags, comment_size, read_size, is_original, b.gmt_create, b.gmt_modified, copyright_info
+        FROM `blog` b
+        JOIN `category` c
+        ON c.id = b.category_id
+        AND b.id = #{id}
+    </select>
+    <select id="getLast" resultMap="blogResultMap">
+        SELECT id, title
+        FROM `blog`
+        WHERE id &lt; #{id}
+        ORDER BY id DESC
+        LIMIT 0, 1
+    </select>
+    <select id="getNext" resultMap="blogResultMap">
+        SELECT id, title
+        FROM `blog`
+        WHERE id &gt; #{id}
+        ORDER BY id ASC
+        LIMIT 0, 1
+    </select>
+    <select id="findHotList" resultMap="blogResultMap">
+        SELECT id, title, read_size
+        FROM `blog`
+        ORDER BY read_size DESC
+        LIMIT 0, 10
+    </select>
+    <select id="findTitleListByIds" resultMap="blogResultMap">
+        SELECT id, title
+        FROM `blog`
+        WHERE id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `blog`(title, summary, content, html_content, category_id, tags, is_original, copyright_info)
+        VALUES (#{title}, #{summary}, #{content}, #{htmlContent}, #{category.id}, #{tags}, #{original}, #{copyrightInfo})
+    </insert>
+    <select id="getHotIds" resultMap="blogResultMap">
+        SELECT id
+        FROM `blog`
+        ORDER BY read_size DESC
+        LIMIT 0, 10
+    </select>
+</mapper>

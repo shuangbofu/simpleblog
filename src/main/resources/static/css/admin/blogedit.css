@@ -1,0 +1,117 @@
+body {
+    text-align: left;
+    background-color: #fafafa;
+}
+
+.form-container {
+    width: 100%;
+    /*padding: 20px;*/
+    /*border: 1px solid #ddd;*/
+    /*background-color: #fff;*/
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.form-item {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.tags-show {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.tag-show {
+    margin-right: 6px;
+    height: 34px;
+    position: relative;
+    background-color: #fff;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    color: #666;
+    border-radius: 6px;
+}
+
+.del-mark {
+    position: absolute;
+    top: -5px;
+    right: 1px;
+    padding: 2px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.del-mark:hover {
+    color: rgb(226, 69, 73);
+}
+
+.editormd {
+    margin: 0;
+    width: 100% !important;
+    margin-bottom: 20px;
+}
+
+.form-btn {
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 4px;
+}
+
+.tag-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tag-input button {
+    margin-left: 10px;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.item-title {
+    padding: 6px 12px;
+    padding-right: 4px;
+    height: 34px;
+    border: 1px solid #ddd;
+    background-color: rgb(245, 245, 245);
+    line-height: 1.42;
+}
+
+.submit {
+    width: 120px;
+    background-color: #26A2EF;
+    color: #fff;
+    border: 1px solid #26A2EF;
+}
+
+.submit:hover {
+    background-color: #26B6EF;
+    border: 1px solid #26B6EF;
+}
+
+.not-modified {
+    color: #7A859C;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    font-size: 16px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+

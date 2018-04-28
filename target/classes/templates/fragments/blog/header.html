@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-fragment="header">
+<head>
+    <title>前后端菜鸟-记录分享所学所想</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/common/blog/header.css}">
+    <link rel="stylesheet" th:href="@{/css/common/blog/main.css}">
+    <link rel="stylesheet" th:href="@{/css/theme.css}">
+</head>
+<body>
+<div class="header">
+    <div class="nav">
+        <div class="logo-motto">
+            <img th:src="@{/img/logo.png}" class="logo">
+        </div>
+        <ul>
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/index')} ? 'active' "><a
+                    th:href="@{/index}">首页</a></li>
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/article')} ? 'active' "><a
+                    th:href="@{/articles}">所有文章</a></li>
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/sharing')} ? 'active' "><a
+                    th:href="@{/sharing}">资源分享</a></li>
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/experience')} ? 'active' "><a
+                    th:href="@{/experience}">经验心得</a></li>
+
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/archive')} ? 'active' "><a
+                    th:href="@{/archive}">归档</a></li>
+            <li th:classappend="${#httpServletRequest.requestURI.contains('/about')} ? 'active' "><a
+                    th:href="@{/about}">关于本站</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

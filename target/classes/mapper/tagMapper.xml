@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shuangbofu.mapper.TagMapper">
+    <resultMap id="tagResultMap" type="cn.shuangbofu.entity.Tag">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="usenum" property="usenum"/>
+        <result column="gmt_create" property="createTime"/>
+        <result column="gmt_modified" property="updateTime"/>
+    </resultMap>
+    <select id="findList" resultMap="tagResultMap">
+        SELECT id, name, usenum
+        FROM `tag`
+        ORDER BY usenum DESC
+    </select>
+    <insert id="save">
+        INSERT INTO `tag`(name, usenum)
+        VALUES (#{name}, 1)
+    </insert>
+    <update id="increaseUsenum" parameterType="Integer">
+        UPDATE `tag`
+        SET usenum = usenum + 1
+        WHERE id = #{id}
+    </update>
+</mapper>

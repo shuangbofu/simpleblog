@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       data-th-fragment="blog-detail-card">
+<head>
+    <link rel="stylesheet" th:href="@{/css/blog/blog-detail-card.css}">
+    <link rel="stylesheet" th:href="@{/css/md/editormd.min.css}"
+          href="/css/editormd.min.css"/>
+</head>
+<body>
+<div class="blog-detail-container card-container">
+    <div class="blog-content">
+        <div class="blog-title" th:text="${blog.title}"></div>
+        <div class="blog-info">
+            <div class="info-item">
+                <strong style="color: #26A2EF;">#<span th:text="${blog.original ? ' 原创':' 转载' }"></span></strong>
+            </div>
+            <div class="info-item">
+                <img th:src="@{/img/browse.png}" class="info-icon-img">
+                <strong>浏览量：</strong><div th:text="${blog.readSize}"></div>
+            </div>
+            <div class="info-item">
+                <img th:src="@{/img/comment.png}" class="info-icon-img">
+                <strong>评论量：</strong><div th:text="${blog.commentSize}"></div>
+            </div>
+            <div class="info-item">
+                <img th:src="@{/img/time.png}" class="info-icon-img">
+                <strong>创建发表于：</strong><div th:text="${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}"></div>
+            </div>
+            <div class="info-item">
+                <img th:src="@{/img/time.png}" class="info-icon-img">
+                <strong>最后编辑于：</strong><div th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}"></div>
+            </div>
+        </div>
+        <div class="summary">
+            <div class="summary-text" th:text="${blog.summary}"></div>
+        </div>
+        <div class="article-content">
+            <article th:utext="${blog.htmlContent}" class="markdown-body">
+            </article>
+        </div>
+        <div class="category-tags">
+            <div class="category">
+                <span>分类：</span>
+                <a th:href="@{/category/} + ${blog.category.id}" th:text="${blog.category.name}"></a>
+            </div>
+            <div class="tags">
+                <span>标签：</span>
+                <span th:each="tag, iter : ${blog.tags.split(',')}">
+                    <span th:if="${iter.count > 1}">, </span>
+                    <a th:text="${tag}" th:href="@{/tag/} + ${tag}"></a>
+
+                </span>
+            </div>
+        </div>
+        <div class="blog-footer-copyright">
+            <div class="copyright-item">版权声明：本文由&nbsp;<strong>[[${blog.copyright.author}]]</strong>&nbsp;发表于
+                <a th:href="${blog.copyright.url}">[[${blog.copyright.platform}]]</a>
+            </div>
+            <div class="copyright-item">文章标题：[[${blog.title}]]</div>
+            <div class="copyright-item">文章链接：<span th:text="${blog.copyright.url}"></span></div>
+            <div class="copyright-item">版权归作者所有，转载请注明出处</div>
+        </div>
+        <div class="last-next">
+            <a  th:if="${blog.last != null}" th:href="@{/article/} + ${blog.last.id}"
+                th:text="'上一篇：' +
+                ${blog.last.title}"></a>
+            <a th:if="${blog.next != null}" th:href="@{/article/} + ${blog.next.id}"
+                th:text="'下一篇：' +
+                ${blog.next.title}"></a>
+        </div>
+    </div>
+    <!--<div class="comment-card">-->
+        <!--评论区-->
+    <!--</div>-->
+</div>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}" src="/js/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/blog/header :: header}">
+</head>
+<body>
+
+<div class="container">
+    <div class="content-container">
+        <div class="left-container">
+            <head th:replace="~{fragments/blog/blog-detail-card :: blog-detail-card}">
+        </div>
+        <div class="right-container">
+            <div th:replace="~{fragments/blog/right-common :: right-common}"></div>
+        </div>
+    </div>
+    <div th:replace="~{fragments/blog/footer :: footer}">...</div>
+</div>
+</body>
+</html>

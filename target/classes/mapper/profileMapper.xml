@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shuangbofu.mapper.ProfileMapper">
+    <select id="get" resultType="cn.shuangbofu.entity.Profile">
+        SELECT id, name, avatar, motto_cn, motto_en, github_url, weibo_url, weixin_code_url, email_url
+        FROM `profile`
+    </select>
+</mapper>

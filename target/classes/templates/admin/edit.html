@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/admin/header :: header}">
+</head>
+<head>
+    <title>[[${title}]]</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/md/editormd.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin/blogedit.css}"/>
+</head>
+<div class="content-container">
+    <div th:replace="~{fragments/admin/left-side :: left-side}">...</div>
+    <div class="right-container">
+
+        <div class="right-content-container">
+            <div class="portlet-title">
+                <img class="caption-icon" th:src="@{/img/list-icon.png}">
+                <span class="caption-text">[[${title}]]</span>
+            </div>
+            <div class="form-container">
+            <div th:text="${blog.id}"></div>
+            <div class="form-item">
+                <label class="item-title">标题：</label><input class="form-control" id="title">
+            </div>
+            <div class="form-item">
+                <label class="item-title">摘要：</label><input class="form-control" th:text="${blog.summary}" id="summary">
+            </div>
+            <div class="form-item">
+                <label class="item-title">分类：</label>
+                <div>
+                    <select id="catSelect" class="form-control">
+                        <option
+                                th:selected="${blog.category!=null ? (blog.category.id eq cat.id) : false}"
+                                id="categoryId"
+                                th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <div class="form-item">
+                    <label class="item-title">当前标签：</label>
+                    <div class="tags-show">
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-title">新建标签：</label>
+                    <div class="tag-input">
+                        <input class="form-control" type="text" id="newTag">
+                        <button class="form-btn" th:text="'添加'" id="newTagAddButton"></button>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-title">添加已有标签：</label>
+                    <div>
+                        <select id="tagSelect" class="form-control">
+                            <option id="tagSelect" th:each="tag : ${tags}" th:value="${tag.id}"
+                                    th:text="${tag.name}"></option>
+                        </select>
+                        <button class="form-btn" th:text="'添加'" id="selectedTagAddButton"></button>
+                    </div>
+                </div>
+            </div>
+            <form>
+                <div class="form-item">
+                    <label class="item-title">是否原创：</label>
+                    <label><input class="form-control" name="original" type="radio" value="true">是</label>
+                    <label> <input class="form-control" name="original" type="radio" value="false" checked>否</label>
+                </div>
+            </form>
+            <div id="copyrightInfo">
+                <div class="form-item"><label class="item-title">作者：</label><input class="form-control"
+                                                                                   th:text="${blog.tags}" id="author">
+                </div>
+                <div class="form-item"><label class="item-title">链接：</label><input class="form-control"
+                                                                                   th:text="${blog.url}" id="url"></div>
+                <div class="form-item"><label class="item-title">平台：</label><input class="form-control"
+                                                                                   th:text="${blog.platform}"
+                                                                                   id="platform">
+                </div>
+            </div>
+            <div class="editormd" id="testedit">
+                <textarea class="editormd-markdown-textarea" name="content" id="content"></textarea>
+                <textarea class="editormd-html-textarea" name="htmlContent" id="htmlContent"></textarea>
+            </div>
+            <button id="submit" class="form-btn submit">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/admin/footer :: footer}">...</div>
+<script type="text/javascript" th:inline="javascript">
+    var tagList = [];
+    function deleteTag(index) {
+        var $tagShow = $(".tag-show span[value=" + index + "]")
+        $tagShow.parent().remove()
+        tagList.splice(index, 1);
+    }
+    function addTag(id, name) {
+        if (name === "") {
+            return;
+        }
+        var flag = true;
+        tagList.forEach(function (tag, index) {
+            if (tag.name == name) {
+                flag = false;
+            }
+        })
+        if (flag) {
+            if (id === null) {
+                id = getIdByName(name);
+            }
+            var index = tagList.length;
+            tagList[tagList.length] = {
+                "id": id,
+                "name": name
+            }
+            $(".tags-show").append("<span class='tag-show'><span>" + name + "</span><span class='del-mark' value='" + index + "' onclick='deleteTag(" + index + ")'>×</span></span>")
+        }
+    }
+    function getIdByName(name) {
+        var result = null;
+        $("#tagSelect option").each(function (item, option) {
+            if (option.text === name) {
+                result = option.value;
+                return false;
+            } else {
+                return true;
+            }
+        })
+        return result;
+    }
+
+    /*<![CDATA[*/
+    $(function () {
+        test = editormd("testedit", {
+            width: "90%",
+            height: 640,
+            syncScrolling: "single",
+            path: [[@{
+            /lib/
+        }
+        ]],
+        saveHTMLToTextarea: true
+    })
+        ;
+        /*]]>*/
+        $('#selectedTagAddButton').click(function () {
+            var $selected = $("#tagSelect option:selected");
+            addTag($selected.val(), $selected.text());
+        });
+        $('#newTagAddButton').click(function () {
+            var $newTag = $("#newTag");
+            addTag(null, $newTag.val());
+            $newTag.val("");
+        });
+        $('input[name="original"]').change(function () {
+            var original = $('input[name="original"]:checked').val();
+            if (original == "true") {
+                $("#author").val("傅双波");
+                $("#url").val("http://www.shuangbofu.cn/blog/article/");
+                $("#platform").val("菜鸟简博客");
+                $("#copyrightInfo input").attr("disabled", "disabled");
+                $("#copyrightInfo input").addClass("not-modified");
+            } else {
+                $("#copyrightInfo input").val("").removeAttr("disabled");
+                $("#copyrightInfo input").removeClass("not-modified");
+            }
+        });
+
+        $("#submit").click(function () {
+            var tags = "";
+            tagList.forEach(function (item, index) {
+                tags = tags + item.name + ",";
+            });
+            tags = tags.substring(0, tags.length - 1);
+            $.ajax({
+                url: '/blog/admin/save',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    "id": $('#blogId').val(),
+                    "title": $('#title').val(),
+                    "summary": $('#summary').val(),
+                    "content": $('#content').val(),
+                    "htmlContent": $('#htmlContent').val(),
+                    "original": $('input[name="original"]:checked').val(),
+                    "category": {'id': $('#catSelect').val()},
+                    "tagList": tagList,
+                    "tags": tags,
+                    "author": $('#author').val(),
+                    "url": $('#url').val(),
+                    "platform": $('#platform').val()
+                }),
+                success: function (data) {
+                    if (data.code == 200) {
+                        window.location = data.data;
+                    } else {
+                        //                    toastr.error("error!"+data.message);
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+</html>

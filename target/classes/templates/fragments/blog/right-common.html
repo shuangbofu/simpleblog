@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org"
+       data-th-fragment="right-common">
+<head>
+    <link rel="stylesheet" th:href="@{/css/blog/right-common.css}">
+</head>
+<body>
+    <div class="about-container card-container">
+        <div class="card-title">关于我</div>
+        <div class="about-content">
+            <img class="avatar"th:src="${profile.avatar}"/>
+            <div class="profile-info">
+                <div class="name" th:text="${profile.name}"></div>
+                <div class="motto" th:text="${profile.mottoCn}"></div>
+                <div class="motto" th:text="${profile.mottoEn}"></div>
+            </div>
+        </div>
+        <div class="profile-link">
+            <div class="link-item"><img th:value="${profile.githubUrl}" class="link-icon" th:src="@{/img/github.png}"></div>
+            <div class="link-item"><img th:value="${profile.weiboUrl}" class="link-icon" th:src="@{/img/weibo.png}"></div>
+            <div class="link-item"><img th:value="${profile.weixinCodeUrl}" class="link-icon" th:src="@{/img/weixin.png}"></div>
+            <div class="link-item"><img th:value="${profile.emailUrl}" class="link-icon" th:src="@{/img/email.png}"></div>
+        </div>
+    </div>
+    <div class="special-list-container card-container" th:if="${special!=null}">
+        <div class="card-title">
+            <span th:text="'专栏'"></span>
+        </div>
+        <div class="special-list">
+            <a class="special-name" th:each="blog, iter : ${special}" th:href="@{/article/} + ${blog.id}" th:text="${blog.title}"></a>
+        </div>
+    </div>
+    <div class="tag-cloud-container card-container">
+        <div class="card-title">
+            标签云
+        </div>
+        <div class="tag-cloud">
+            <a th:classappend="(${tag.name eq tip.data} ? ' tag-selected' : '')
+                  + (${tag.usenum} eq 0 ? ' disabled' : '')"
+               th:href="@{/tag/} + ${tag.name}"
+               class="tag"
+               th:each="tag : ${tags}"
+               th:text="${tag.name + '(' + tag.usenum + ')'}"></a>
+        </div>
+    </div>
+
+    <div class="cat-list-container card-container">
+        <div class="card-title">
+            文章分类
+        </div>
+        <div class="cat-list">
+            <div class="cat" th:each="cat : ${categories}">
+                <a th:classappend="(${cat.name eq tip.data} ? 'cat-selected ' : '')+(${cat.usenum ==0 ? 'cat-disabled' : ''})"
+                   th:href="@{/category/} + ${cat.id}"
+                   class="cat-name"
+                   th:text="${cat.name}"></a>
+                <span class="cat-usenum" th:text="${cat.usenum} + '篇'"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="article-list-container card-container">
+        <div class="card-title">
+            <span th:text="'热门文章'"></span>
+        </div>
+        <div class="article-list">
+            <a class="article-name" th:each="blog, iter : ${hot}" th:href="@{/article/} + ${blog.id}" th:text="${iter.count} + '. ' +${blog.title}"></a>
+        </div>
+    </div>
+    <div class="friendly-link-container card-container">
+        <div class="card-title">
+            <span th:text="'友情链接'"></span>
+        </div>
+    </div>
+</body>
+</html>

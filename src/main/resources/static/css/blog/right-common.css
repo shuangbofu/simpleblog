@@ -1,0 +1,150 @@
+.about-container, .special-list-container, .tag-cloud-container, .cat-list-container, .article-list-container, .friendly-link-container {
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+.about-content {
+    /*padding: 10px 0;*/
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+
+.profile-info {
+    text-align: left;
+    margin-left: 10px;
+}
+
+.avatar {
+    /*flex: 0 0 100px;*/
+    border-radius: 6px;
+    width: 80px;
+    height: 80px;
+}
+
+.name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.motto {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #808080;
+}
+
+.profile-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.link-item {
+    text-align: center;
+    flex: 1;
+}
+
+.link-icon {
+    width: 45px;
+    height: 45px;
+    flex: 1;
+}
+
+.special-name {
+    color: #26A2EF;
+    font-size: 16px;
+    line-height: 24px;
+    max-width: 260px;
+    padding-bottom: 8px;
+}
+
+.special-name:hover {
+    color: #26B6EF;
+}
+
+.tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag {
+    line-height: 1.5;
+    color: #26A2ef;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin: 0 10px 10px 0;
+    font-size: 15px;
+    /*font-weight: 300;*/
+}
+
+.tag:hover {
+    background-color: #26B6EF;
+    color: #fff;
+    border: 1px solid #26B6EF;
+}
+
+.tag-selected {
+    background-color: #26A2ef;
+    color: #fff;
+    border: 1px solid #26A2ef;
+    pointer-events: none;
+}
+
+.cat-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.cat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.cat-name {
+    color: #666;
+    font-size: 16px;
+    /*font-weight: 300;*/
+}
+
+.cat-disabled {
+    color: #bbb;
+    pointer-events: none;
+}
+
+.cat-name:hover {
+    color: #26B6EF;
+    text-decoration: underline;
+}
+
+.cat-usenum {
+    color: #bbb;
+}
+
+.cat-selected {
+    color: #26A2EF;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.article-list, .special-list {
+    display: flex;
+    flex-direction: column;
+    /*padding-left:;*/
+}
+
+.article-name {
+    color: #757a7e;
+    font-size: 16px;
+    line-height: 22px;
+    max-width: 260px;
+    /*font-weight: 300;*/
+    padding-bottom: 8px;
+}
+
+.article-name:hover {
+    color: #26A2EF;
+}

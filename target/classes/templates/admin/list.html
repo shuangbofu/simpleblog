@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<head th:replace="~{fragments/admin/header :: header}">
+</head>
+<head>
+    <link rel="stylesheet" th:href="@{/css/admin/bloglist.css}">
+</head>
+<title>[[${title}]]</title>
+<div class="content-container">
+    <div th:replace="~{fragments/admin/left-side :: left-side}"></div>
+    <div class="right-container">
+        <div class="right-content-container">
+            <div class="portlet-title">
+                <img class="caption-icon" th:src="@{/img/list-icon.png}">
+                <span class="caption-text">博客列表</span>
+            </div>
+            <div class="operation-bar">
+                <button class="add-button">写博客</button>
+                <div>
+                    <label class="item-title">分类：</label>
+                    <select id="catSelect" class="form-control">
+                        <option
+                                id="categoryId"
+                                th:selected="${cat.id == blogPage.list[0].category.id}"
+                                th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"></option>
+                    </select>
+                </div>
+            </div>
+            <table class="table">
+                <thead class="table-header">
+                <tr>
+                    <th>id</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>标签</th>
+                    <th>原创</th>
+                    <th>创建时间</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog : ${blogPage.list}">
+                    <td>
+                        <div class="id-cell table-cell" th:text="${blog.id}"></div>
+                    </td>
+                    <td>
+                        <a class="title-cell table-cell" th:text="${blog.title}" th:href="@{/}"></a>
+                    </td>
+                    <!--<td>-->
+                    <!--<div class="summary-cell table-cell" th:text="${blog.summary}"></div>-->
+                    <!--</td>-->
+                    <td>
+                        <div class="cat-cell table-cell" th:text="${blog.category.name}"></div>
+                    </td>
+                    <td>
+                        <div class="tags-cell table-cell" th:text="${blog.tags}"></div>
+                    </td>
+                    <td>
+                        <div class="tags-cell table-cell" th:text="${blog.original ? '是':'否'}"></div>
+                    </td>
+                    <td>
+                        <div class="time-cell table-cell">[[${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}]]
+                        </div>
+                    </td>
+                    <td>
+                        <div class="time-cell table-cell">[[${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}]]
+                        </div>
+                    </td>
+                    <td>
+                        <div class="operation-cell table-cell">
+                            <button class="detail">编辑</button>
+                            <button class="delete">删除</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div th:replace="~{fragments/common/pagination :: pagination}"></div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragments/admin/footer :: footer}">...</div>
+<script>
+    $(function(){
+        $(".add-button").click(function(){
+            window.location = "/blog/admin/publish";
+        });
+    })
+</script>
+</html>

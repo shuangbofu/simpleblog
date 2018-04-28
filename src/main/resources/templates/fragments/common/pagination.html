@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      data-th-fragment="pagination">
+<head>
+    <link rel="stylesheet" th:href="@{/css/common/pagination.css}">
+</head>
+<body>
+<div class="pagination" th:if="${blogPage.pages gt 0}">
+    <div class="page-size card-title">
+        每页[[${blogPage.pageSize}]]条记录/共[[${blogPage.total}]]条
+    </div>
+    <span class="pagination-list" th:if="${blogPage.pages le 8}">
+        <a th:classappend="${blogPage.isFirstPage} ? 'disabled' : ''"
+           th:href="@{/} + ${tip.path} + '?pageNum=' + ${blogPage.pageNum - 1}"
+           class="page-item page-last" th:text="'上一页'">
+        </a>
+        <a data-th-each="i : ${#numbers.sequence(1, blogPage.pages)}" class="page-item"
+           th:href="@{/} + ${tip.path} + '?pageNum=' + ${i}"
+           th:classappend="${(blogPage.pageNum) eq i} ? 'selected' : ''"
+           th:text="${i}">
+        </a>
+        <a th:classappend="${blogPage.isLastPage} ? 'disabled' : ''"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pageNum + 1}"
+           class="page-item page-next" th:text="'下一页'">
+        </a>
+    </span>
+
+    <span class="pagination-list" th:if="${blogPage.pages gt 7}">
+        <a th:classappend="${blogPage.isFirstPage} ? 'disabled' : ''"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pageNum - 1}"
+           class="page-item page-last" th:text="'上一页'">
+        </a>
+        <a th:href="@{/} + ${tip.path} +  '?pageNum=1'"
+           th:classappend="${(blogPage.pageNum) eq 1} ? 'selected' : ''"
+           class="page-item page-start" th:text="'1'">
+        </a>
+
+
+
+         <a th:if="${blogPage.pageNum le 4}" data-th-each="i : ${#numbers.sequence(2, 5)}" class="page-item"
+            th:href="@{/} + ${tip.path} +  '?pageNum=' + ${i}"
+            th:classappend="${(blogPage.pageNum) eq i} ? 'selected' : ''"
+            th:text="${i}">
+         </a>
+
+        <a th:if="${blogPage.pageNum le 4}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=6'"
+           th:text="'...'"></a>
+
+
+
+
+
+        <a th:if="${blogPage.pages - blogPage.pageNum le 3}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pages - 7}"
+           th:text="'...'"></a>
+
+        <a th:if="${blogPage.pages - blogPage.pageNum le 3}"
+           data-th-each="i : ${#numbers.sequence(blogPage.pages - 4, blogPage.pages - 1)}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${i}"
+           th:classappend="${(blogPage.pageNum) eq i} ? 'selected' : ''"
+           th:text="${i}">
+         </a>
+
+
+
+
+
+        <a th:if="${blogPage.pageNum gt 4 && blogPage.pages - blogPage.pageNum gt 3}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pageNum - 3}"
+           th:text="'...'"></a>
+
+        <a th:if="${blogPage.pageNum gt 4 && blogPage.pages - blogPage.pageNum gt 3}"
+           data-th-each="i : ${#numbers.sequence(blogPage.pageNum, blogPage.pageNum + 3)}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${i}"
+           th:classappend="${(blogPage.pageNum) eq i} ? 'selected' : ''"
+           th:text="${i}">
+         </a>
+
+        <a th:if="${blogPage.pageNum gt 4 && blogPage.pages - blogPage.pageNum gt 3}" class="page-item"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pageNum + 4}"
+           th:text="'...'"></a>
+
+        <a th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pages}"
+           th:classappend="${(blogPage.pageNum eq blogPage.pages) } ? 'selected' : ''"
+           class="page-item page-end" th:text="${blogPage.pages}">
+        </a>
+
+        <a th:classappend="${blogPage.isLastPage} ? 'disabled' : ''"
+           th:href="@{/} + ${tip.path} +  '?pageNum=' + ${blogPage.pageNum + 1}"
+           class="page-item page-next" th:text="'下一页'">
+        </a>
+    </span>
+</div>
+</body>
+</html>
